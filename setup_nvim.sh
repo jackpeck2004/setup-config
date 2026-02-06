@@ -1,18 +1,12 @@
 #!/usr/bin/env bash
 
-BUILD_DIR="/tmp/nvim"
 CONFIG_DIR="$HOME/.config/nvim"
 
-if [ ! -d $BUILD_DIR ]; then
-    git clone -b stable https://github.com/neovim/neovim $BUILD_DIR
-else
-    cd $BUILD_DIR
+if [ ! -d $CONFIG_DIR ]; then
+    git clone git@github.com:jackpeck2004/nvim $CONFIG_DIR
+else 
+    cwd=$(pwd)
+    cd $CONFIG_DIR
     git pull
+    cd $cwd
 fi
-
-sudo apt install gettext cmake curl build-essential git
-
-cd $BUILD_DIR
-make CMAKE_BUILD_TYPE=RelWithDebInfo
-sudo make install
-
