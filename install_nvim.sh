@@ -10,8 +10,6 @@ else
     git pull
 fi
 
-sudo apt install gettext cmake curl build-essential git
-
 cd $BUILD_DIR
 make CMAKE_BUILD_TYPE=RelWithDebInfo
 sudo make install
