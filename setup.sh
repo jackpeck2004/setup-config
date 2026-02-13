@@ -34,6 +34,13 @@ if [ "$OS" = "Darwin" ]; then
     brew upgrade $pkg 2>/dev/null || brew install $pkg
   done
 
+  # Install or upgrade macOS apps via Homebrew casks
+  echo "Installing/upgrading macOS apps..."
+  CASKS="ghostty raycast rectangle"
+  for cask in $CASKS; do
+    brew upgrade --cask $cask 2>/dev/null || brew install --cask $cask
+  done
+
 elif [ -r /etc/os-release ]; then
   . /etc/os-release
   if [ "$ID" = "ubuntu" ]; then
