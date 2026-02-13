@@ -1,9 +1,24 @@
 #!/usr/bin/env bash
 
-if [ -r /etc/os-release ]; then
+# Detect OS
+OS="$(uname -s)"
+
+if [ "$OS" = "Darwin" ]; then
+  echo "macOS detected, installing OrbStack"
+
+  if ! command -v brew &> /dev/null; then
+    echo "Homebrew not found. Please run setup.sh first."
+    exit 1
+  fi
+
+  # Install OrbStack via Homebrew
+  brew install --cask orbstack
+
+  echo "OrbStack installed. Please open OrbStack from Applications to complete setup."
+
+elif [ -r /etc/os-release ]; then
   . /etc/os-release
   if [ "$ID" = "ubuntu" ]; then
-    # sudo apt install gettext cmake curl wget git build-essential golang-go tmux -y
     sudo apt remove $(dpkg --get-selections docker.io docker-compose docker-compose-v2 docker-doc podman-docker containerd runc | cut -f1) -y
     sudo apt install ca-certificates
     sudo install -m 0755 -d /etc/apt/keyrings
@@ -36,9 +51,11 @@ EOF
     echo "Unsupported distro: $ID"
     echo "Please install dependencies manually"
   fi
-else
-  echo "/etc/os-release not found"
-fi
 
-sudo groupadd docker
-sudo usermod -aG docker $USER
+  # Linux-only: add user to docker group
+  sudo groupadd docker
+  sudo usermod -aG docker $USER
+else
+  echo "Unsupported OS: $OS"
+  echo "Please install Docker manually"
+fi

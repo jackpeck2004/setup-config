@@ -1,16 +1,23 @@
 #!/usr/bin/env bash
 
-BUILD_DIR="/tmp/nvim"
-CONFIG_DIR="$HOME/.config/nvim"
+OS="$(uname -s)"
 
-if [ ! -d $BUILD_DIR ]; then
-    git clone -b stable https://github.com/neovim/neovim $BUILD_DIR
+if [ "$OS" = "Darwin" ]; then
+    echo "Installing Neovim via Homebrew..."
+    brew install neovim
 else
-    cd $BUILD_DIR
-    git pull
-fi
+    # Linux: build from source
+    BUILD_DIR="/tmp/nvim"
 
-cd $BUILD_DIR
-make CMAKE_BUILD_TYPE=RelWithDebInfo
-sudo make install
+    if [ ! -d $BUILD_DIR ]; then
+        git clone -b stable https://github.com/neovim/neovim $BUILD_DIR
+    else
+        cd $BUILD_DIR
+        git pull
+    fi
+
+    cd $BUILD_DIR
+    make CMAKE_BUILD_TYPE=RelWithDebInfo
+    sudo make install
+fi
 

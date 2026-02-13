@@ -1,6 +1,37 @@
 #!/usr/bin/env bash
 
-if [ -r /etc/os-release ]; then
+# Detect OS
+OS="$(uname -s)"
+
+if [ "$OS" = "Darwin" ]; then
+  echo "macOS detected, setting up with Homebrew"
+
+  # Install Homebrew if not present
+  if ! command -v brew &> /dev/null; then
+    echo "Installing Homebrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+    # Add Homebrew to PATH for Apple Silicon Macs
+    if [ -f /opt/homebrew/bin/brew ]; then
+      eval "$(/opt/homebrew/bin/brew shellenv)"
+    fi
+  else
+    echo "Homebrew already installed"
+  fi
+
+  # Install Xcode Command Line Tools if not present
+  if ! xcode-select -p &> /dev/null; then
+    echo "Installing Xcode Command Line Tools..."
+    xcode-select --install
+    echo "Please complete the Xcode CLT installation and re-run this script"
+    exit 1
+  fi
+
+  # Install dependencies via Homebrew
+  echo "Installing dependencies via Homebrew..."
+  brew install gettext cmake curl wget git go tmux tig
+
+elif [ -r /etc/os-release ]; then
   . /etc/os-release
   if [ "$ID" = "ubuntu" ]; then
     echo "Ubuntu detected, automatically installing depenencies"
@@ -14,7 +45,8 @@ if [ -r /etc/os-release ]; then
     echo "Please install dependencies manually"
   fi
 else
-  echo "/etc/os-release not found"
+  echo "Unsupported OS: $OS"
+  echo "Please install dependencies manually"
 fi
 
 ./setup_python.sh
