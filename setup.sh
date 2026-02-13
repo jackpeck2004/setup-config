@@ -27,17 +27,22 @@ if [ "$OS" = "Darwin" ]; then
     exit 1
   fi
 
-  # Install dependencies via Homebrew
-  echo "Installing dependencies via Homebrew..."
-  brew install gettext cmake curl wget git go tmux tig
+  # Install or upgrade dependencies via Homebrew
+  echo "Installing/upgrading dependencies via Homebrew..."
+  PACKAGES="gettext cmake curl wget git go tmux tig"
+  for pkg in $PACKAGES; do
+    brew upgrade $pkg 2>/dev/null || brew install $pkg
+  done
 
 elif [ -r /etc/os-release ]; then
   . /etc/os-release
   if [ "$ID" = "ubuntu" ]; then
-    echo "Ubuntu detected, automatically installing depenencies"
-    sudo apt install gettext cmake curl wget git build-essential golang-go tmux tig -y
+    echo "Ubuntu detected, automatically installing/upgrading dependencies"
+    sudo apt update
+    sudo apt install --upgrade gettext cmake curl wget git build-essential golang-go tmux tig -y
   elif [ "$ID" = "fedora" ]; then
-    echo "Fedora detected, automatically installing depenencies"
+    echo "Fedora detected, automatically installing/upgrading dependencies"
+    sudo dnf -y upgrade gettext cmake curl git go tmux tig
     sudo dnf -y install gettext cmake curl git go tmux tig
     sudo dnf -y group install "C Development Tools and Libraries" "Development Tools"
   else

@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 
-echo "Installing Python (uv)"
+echo "Installing/upgrading Python (uv)"
 
 OS="$(uname -s)"
 
 if [ "$OS" = "Darwin" ]; then
-    brew install uv
+    brew upgrade uv 2>/dev/null || brew install uv
 else
+    # curl install script handles updates automatically
     curl -LsSf https://astral.sh/uv/install.sh | sh
 fi
 

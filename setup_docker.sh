@@ -11,10 +11,10 @@ if [ "$OS" = "Darwin" ]; then
     exit 1
   fi
 
-  # Install OrbStack via Homebrew
-  brew install --cask orbstack
+  # Install or upgrade OrbStack via Homebrew
+  brew upgrade --cask orbstack 2>/dev/null || brew install --cask orbstack
 
-  echo "OrbStack installed. Please open OrbStack from Applications to complete setup."
+  echo "OrbStack installed/upgraded. Please open OrbStack from Applications to complete setup."
 
 elif [ -r /etc/os-release ]; then
   . /etc/os-release
@@ -33,7 +33,7 @@ Components: stable
 Signed-By: /etc/apt/keyrings/docker.asc
 EOF
     sudo apt update
-    sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+    sudo apt install --upgrade docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
   elif [ "$ID" = "fedora" ]; then
     sudo dnf remove docker \
                   docker-client \
@@ -46,7 +46,8 @@ EOF
                   docker-engine-selinux \
                   docker-engine
     sudo dnf config-manager addrepo --from-repofile https://download.docker.com/linux/fedora/docker-ce.repo
-    sudo dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+    sudo dnf -y upgrade docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+    sudo dnf -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
   else
     echo "Unsupported distro: $ID"
     echo "Please install dependencies manually"

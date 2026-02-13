@@ -3,8 +3,8 @@
 OS="$(uname -s)"
 
 if [ "$OS" = "Darwin" ]; then
-    echo "Installing Neovim via Homebrew..."
-    brew install neovim
+    echo "Installing/upgrading Neovim via Homebrew..."
+    brew upgrade neovim 2>/dev/null || brew install neovim
 else
     # Linux: build from source
     BUILD_DIR="/tmp/nvim"

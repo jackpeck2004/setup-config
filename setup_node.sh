@@ -4,7 +4,7 @@ OS="$(uname -s)"
 FNM_ENV_LINE='eval "$(fnm env --use-on-cd)"'
 
 if [ "$OS" = "Darwin" ]; then
-    brew install fnm
+    brew upgrade fnm 2>/dev/null || brew install fnm
 
     # Add fnm to zshrc if not already present
     if ! grep -Fq "fnm env" "$HOME/.zshrc"; then
