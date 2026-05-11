@@ -25,3 +25,6 @@ fi
 
 fnm install --lts
 fnm default lts-latest
+
+# Install/update codegraph globally for graph tooling.
+npm install --global @colbymchenry/codegraph
