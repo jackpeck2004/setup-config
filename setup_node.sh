@@ -28,3 +28,6 @@ fnm default lts-latest
 
 # Install/update codegraph globally for graph tooling.
 npm install --global @colbymchenry/codegraph
+
+# Install/update caveman skill set (safe to re-run).
+npx --yes github:JuliusBrussee/caveman
