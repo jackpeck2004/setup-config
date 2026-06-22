@@ -7,7 +7,7 @@ if [ "$OS" = "Darwin" ]; then
   echo "macOS detected, setting up with Homebrew"
 
   # Install Homebrew if not present
-  if ! command -v brew &> /dev/null; then
+  if ! command -v brew &>/dev/null; then
     echo "Installing Homebrew..."
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
@@ -20,7 +20,7 @@ if [ "$OS" = "Darwin" ]; then
   fi
 
   # Install Xcode Command Line Tools if not present
-  if ! xcode-select -p &> /dev/null; then
+  if ! xcode-select -p &>/dev/null; then
     echo "Installing Xcode Command Line Tools..."
     xcode-select --install
     echo "Please complete the Xcode CLT installation and re-run this script"
@@ -36,7 +36,7 @@ if [ "$OS" = "Darwin" ]; then
 
   # Install or upgrade macOS apps via Homebrew casks
   echo "Installing/upgrading macOS apps..."
-  CASKS="ghostty raycast rectangle"
+  CASKS="ghostty raycast rectangle codex codex-app cursor mole-app"
   for cask in $CASKS; do
     brew upgrade --cask $cask 2>/dev/null || brew install --cask $cask
   done
