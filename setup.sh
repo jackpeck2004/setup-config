@@ -52,7 +52,6 @@ if [ "$OS" = "Darwin" ]; then
   echo "Cleaning up Homebrew..."
   brew cleanup
   brew autoremove
-  brew prune
   brew doctor
   brew cleanup --prune=all
 
