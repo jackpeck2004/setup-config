@@ -36,7 +36,7 @@ if [ "$OS" = "Darwin" ]; then
 
   # Install dependencies via Homebrew (upgrade handled above when brew pre-existed)
   echo "Installing dependencies via Homebrew..."
-  PACKAGES="gettext cmake curl wget git go tmux tig ripgrep"
+  PACKAGES="gettext cmake curl wget git go tmux tig ripgrep fd"
   for pkg in $PACKAGES; do
     brew install $pkg
   done
@@ -60,11 +60,11 @@ elif [ -r /etc/os-release ]; then
   if [ "$ID" = "ubuntu" ]; then
     echo "Ubuntu detected, automatically installing/upgrading dependencies"
     sudo apt update
-    sudo apt install --upgrade gettext cmake curl wget git build-essential golang-go tmux tig ripgrep -y
+    sudo apt install --upgrade gettext cmake curl wget git build-essential golang-go tmux tig ripgrep fd -y
   elif [ "$ID" = "fedora" ]; then
     echo "Fedora detected, automatically installing/upgrading dependencies"
-    sudo dnf -y upgrade gettext cmake curl git go tmux tig ripgrep
-    sudo dnf -y install gettext cmake curl git go tmux tig ripgrep
+    sudo dnf -y upgrade gettext cmake curl git go tmux tig ripgrep fd
+    sudo dnf -y install gettext cmake curl git go tmux tig ripgrep fd
     sudo dnf -y group install "C Development Tools and Libraries" "Development Tools"
   else
     echo "Unsupported distro: $ID"
