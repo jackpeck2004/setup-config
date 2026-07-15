@@ -13,3 +13,7 @@ else
     echo "Installing oh-my-zsh..."
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 fi
+
+if [ -f "$HOME/.zshrc" ]; then
+    sed -i '' 's/^ZSH_THEME=.*/ZSH_THEME="gentoo"/' "$HOME/.zshrc"
+fi

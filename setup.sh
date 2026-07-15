@@ -88,3 +88,5 @@ fi
 ./setup_tmux.sh
 ./setup_git_worktrees.sh
 ./setup_docker.sh
+
+./check.sh
