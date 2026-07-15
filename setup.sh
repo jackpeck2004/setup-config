@@ -84,6 +84,7 @@ fi
 ./setup_nvim.sh
 
 ./setup_alias.sh
+./setup_zsh.sh
 ./setup_tmux.sh
 ./setup_git_worktrees.sh
 ./setup_docker.sh
