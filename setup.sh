@@ -60,11 +60,11 @@ elif [ -r /etc/os-release ]; then
   if [ "$ID" = "ubuntu" ]; then
     echo "Ubuntu detected, automatically installing/upgrading dependencies"
     sudo apt update
-    sudo apt install --upgrade gettext cmake curl wget git build-essential golang-go tmux tig ripgrep fd -y
+    sudo apt install --upgrade gettext cmake curl wget git build-essential golang-go tmux tig ripgrep fd zsh -y
   elif [ "$ID" = "fedora" ]; then
     echo "Fedora detected, automatically installing/upgrading dependencies"
-    sudo dnf -y upgrade gettext cmake curl git go tmux tig ripgrep fd
-    sudo dnf -y install gettext cmake curl git go tmux tig ripgrep fd
+    sudo dnf -y upgrade gettext cmake curl git go tmux tig ripgrep fd zsh
+    sudo dnf -y install gettext cmake curl git go tmux tig ripgrep fd zsh
     sudo dnf -y group install "C Development Tools and Libraries" "Development Tools"
   else
     echo "Unsupported distro: $ID"

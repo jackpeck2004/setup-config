@@ -1,12 +1,5 @@
 #!/usr/bin/env bash
 
-OS="$(uname -s)"
-
-if [ "$OS" != "Darwin" ]; then
-    echo "Not macOS, skipping oh-my-zsh install"
-    exit 0
-fi
-
 if [ -d "$HOME/.oh-my-zsh" ]; then
     echo "oh-my-zsh already present, skipping"
 else
@@ -15,5 +8,9 @@ else
 fi
 
 if [ -f "$HOME/.zshrc" ]; then
-    sed -i '' 's/^ZSH_THEME=.*/ZSH_THEME="gentoo"/' "$HOME/.zshrc"
+    if [ "$(uname -s)" = "Darwin" ]; then
+        sed -i '' 's/^ZSH_THEME=.*/ZSH_THEME="gentoo"/' "$HOME/.zshrc"
+    else
+        sed -i 's/^ZSH_THEME=.*/ZSH_THEME="gentoo"/' "$HOME/.zshrc"
+    fi
 fi

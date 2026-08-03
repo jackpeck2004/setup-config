@@ -1,13 +1,6 @@
 #!/usr/bin/env bash
 
-OS="$(uname -s)"
-
-# Determine the correct shell rc file
-if [ "$OS" = "Darwin" ]; then
-    SHELL_RC="$HOME/.zshrc"
-else
-    SHELL_RC="$HOME/.bashrc"
-fi
+SHELL_RC="$HOME/.zshrc"
 
 mkdir -p "$HOME/.config"
 

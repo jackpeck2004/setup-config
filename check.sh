@@ -16,11 +16,7 @@ check_cmd() {
 
 echo "== shell config =="
 
-if [ "$OS" = "Darwin" ]; then
-    SHELL_RC="$HOME/.zshrc"
-else
-    SHELL_RC="$HOME/.bashrc"
-fi
+SHELL_RC="$HOME/.zshrc"
 
 if [ -f "$SHELL_RC" ] && grep -Fq "source ~/.config/alias" "$SHELL_RC"; then
     pass "$SHELL_RC sources ~/.config/alias"
@@ -34,18 +30,16 @@ else
     fail "~/.config/alias missing"
 fi
 
-if [ "$OS" = "Darwin" ]; then
-    if [ -d "$HOME/.oh-my-zsh" ]; then
-        pass "oh-my-zsh installed"
-    else
-        fail "oh-my-zsh not installed"
-    fi
+if [ -d "$HOME/.oh-my-zsh" ]; then
+    pass "oh-my-zsh installed"
+else
+    fail "oh-my-zsh not installed"
+fi
 
-    if grep -Fq 'ZSH_THEME="gentoo"' "$SHELL_RC" 2>/dev/null; then
-        pass "ZSH_THEME set to gentoo"
-    else
-        fail "ZSH_THEME not set to gentoo in $SHELL_RC"
-    fi
+if grep -Fq 'ZSH_THEME="gentoo"' "$SHELL_RC" 2>/dev/null; then
+    pass "ZSH_THEME set to gentoo"
+else
+    fail "ZSH_THEME not set to gentoo in $SHELL_RC"
 fi
 
 echo "== core tools =="
