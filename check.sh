@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 
+# Tool installers in this repo (fnm, uv, pnpm) wire themselves into
+# ~/.zshrc, not this script's own shell. Re-derive PATH the way a real
+# interactive zsh session would, so the checks below reflect what a user
+# actually gets in their terminal instead of whatever this script inherited.
+if [ -z "$CHECK_SH_REEXEC" ] && [ -f "$HOME/.zshrc" ] && command -v zsh &>/dev/null; then
+    export CHECK_SH_REEXEC=1
+    exec zsh -c 'source "$HOME/.zshrc" &>/dev/null; export PATH; exec bash "$0" "$@"' "$0" "$@"
+fi
+
 OS="$(uname -s)"
 FAIL=0
 
