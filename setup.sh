@@ -7,7 +7,6 @@ if [ "$OS" = "Darwin" ]; then
   echo "macOS detected, setting up with Homebrew"
 
   # Install Homebrew if not present
-  BREW_ALREADY_INSTALLED=false
   if ! command -v brew &>/dev/null; then
     echo "Installing Homebrew..."
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -18,7 +17,6 @@ if [ "$OS" = "Darwin" ]; then
     fi
   else
     echo "Homebrew already installed"
-    BREW_ALREADY_INSTALLED=true
   fi
 
   # Install Xcode Command Line Tools if not present
@@ -29,31 +27,19 @@ if [ "$OS" = "Darwin" ]; then
     exit 1
   fi
 
-  if [ "$BREW_ALREADY_INSTALLED" = true ]; then
-    echo "Upgrading all Homebrew packages..."
-    brew upgrade --greedy
-  fi
-
-  # Install dependencies via Homebrew (upgrade handled above when brew pre-existed)
+  # Install dependencies via Homebrew (only what is missing, nothing is upgraded)
   echo "Installing dependencies via Homebrew..."
   PACKAGES="gettext cmake curl wget git go tmux tig ripgrep fd"
   for pkg in $PACKAGES; do
-    brew install $pkg
+    brew list --formula "$pkg" &>/dev/null || brew install "$pkg"
   done
 
   # Install macOS apps via Homebrew casks
   echo "Installing macOS apps..."
-  CASKS="ghostty raycast rectangle codex codex-app cursor mole-app"
+  CASKS="ghostty raycast codex codex-app cursor mole-app"
   for cask in $CASKS; do
-    brew install --cask $cask
+    brew list --cask "$cask" &>/dev/null || brew install --cask "$cask"
   done
-
-  # Cleanup Homebrew
-  echo "Cleaning up Homebrew..."
-  brew cleanup
-  brew autoremove
-  brew doctor
-  brew cleanup --prune=all
 
 elif [ -r /etc/os-release ]; then
   . /etc/os-release
@@ -88,5 +74,7 @@ fi
 ./setup_tmux.sh
 ./setup_git_worktrees.sh
 ./setup_docker.sh
+./setup_git_signing.sh
+./setup_macos.sh
 
 ./check.sh

@@ -1,13 +1,19 @@
 #!/usr/bin/env bash
 
 SHELL_RC="$HOME/.zshrc"
+REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 mkdir -p "$HOME/.config"
 
-if [ -f "$HOME/.config/alias" ]; then
-    echo "alias file already present, skipping"
+# Symlink to the alias file in this repo so edits here apply everywhere.
+if [ -L "$HOME/.config/alias" ] && [ "$(readlink "$HOME/.config/alias")" = "$REPO_DIR/alias" ]; then
+    echo "alias already linked, skipping"
 else
-    curl -sL https://gist.githubusercontent.com/jackpeck2004/542c68823c13fd10ab9601623be1730d/raw/bf1281e9436fa5be4b71dbeb6f5a2cd34c48bf18/alias -o "$HOME/.config/alias"
+    if [ -e "$HOME/.config/alias" ] || [ -L "$HOME/.config/alias" ]; then
+        echo "Backing up existing alias file to ~/.config/alias.bak"
+        mv "$HOME/.config/alias" "$HOME/.config/alias.bak"
+    fi
+    ln -s "$REPO_DIR/alias" "$HOME/.config/alias"
 fi
 
 if grep -Fq "source ~/.config/alias" "$SHELL_RC"; then
