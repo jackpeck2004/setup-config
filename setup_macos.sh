@@ -19,6 +19,9 @@ defaults write com.apple.screencapture target -string "clipboard"
 # Tiled windows touch each other, no margins
 defaults write com.apple.WindowManager EnableTiledWindowMargins -bool false
 
+# Prefer tabs over new windows when opening documents
+defaults write NSGlobalDomain AppleWindowTabbingMode -string "always"
+
 # Appearance follows time of day
 defaults write NSGlobalDomain AppleInterfaceStyleSwitchesAutomatically -bool true
 
