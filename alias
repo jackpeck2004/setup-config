@@ -4,17 +4,6 @@ export DEV="$HOME/Developer"
 export EDITOR=nvim
 export DOCUMENTS="~/Documents"
 
-export EVENT_STUDIO="$DEV/event-studio"
-export EVENT_STUDIO_WEB_APP="$EVENT_STUDIO/event-studio-web-app"
-export EVENT_STUDIO_CHECKIN_APP="$EVENT_STUDIO/event-studio-checkin-app"
-alias es="cd $EVENT_STUDIO"
-alias esw="cd $EVENT_STUDIO_WEB_APP"
-alias esc="cd $EVENT_STUDIO_CHECKIN_APP"
-
-export TWIN_DEV="$DEV/twin"
-export TWIN_INTERNAL_TOOLS="$TWIN_DEV/twin-internal-tools"
-alias tit="cd $TWIN_INTERNAL_TOOLS"
-
 # Direcotory Alias
 alias docs="cd $DOCUMENTS"
 alias dev="cd $DEV"
@@ -50,12 +39,3 @@ alias gpsh='git push'
 alias gss='git status -s'
 alias gs='echo ""; echo "*********************************************"; echo -e "   DO NOT FORGET TO PULL BEFORE COMMITTING"; echo "*********************************************"; echo ""; git status'
 
-# Directories for courses or projects
-
-# Configuration for 2iab1
-export FDA="$DEV/2iab1-2025-2026"
-alias fda="cd $FDA"
-export PYTHONPATH="$FDA/library/test_frame_helper:$PYTHONPATH"
-export PYTHONPATH="$FDA/library/test-frame-utils:$PYTHONPATH"
-export PYTHONPATH="$FDA/library/test_frame_ds:$PYTHONPATH"
-export PYTHONPATH="$FDA/library:$PYTHONPATH"
