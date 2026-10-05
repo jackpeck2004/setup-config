@@ -20,3 +20,9 @@ fi
 if ! git config --global --get core.autocrlf &>/dev/null; then
     git config --global core.autocrlf input
 fi
+if ! git config --global --get user.name &>/dev/null; then
+    git config --global user.name "Giacomo Pasin"
+fi
+if ! git config --global --get user.email &>/dev/null; then
+    git config --global user.email "giacomo.pasin@gmail.com"
+fi
