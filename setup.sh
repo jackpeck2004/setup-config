@@ -36,7 +36,7 @@ if [ "$OS" = "Darwin" ]; then
 
   # Install macOS apps via Homebrew casks
   echo "Installing macOS apps..."
-  CASKS="ghostty raycast codex codex-app cursor mole-app"
+  CASKS="ghostty raycast codex codex-app cursor mole-app claude-code"
   for cask in $CASKS; do
     brew list --cask "$cask" &>/dev/null || brew install --cask "$cask"
   done

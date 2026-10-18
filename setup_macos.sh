@@ -12,6 +12,7 @@ echo "Applying macOS defaults..."
 defaults write com.apple.dock autohide-delay -float 0
 defaults write com.apple.dock autohide-time-modifier -float 0.15
 defaults write com.apple.dock tilesize -int 58
+defaults write com.apple.dock show-recents -bool false
 
 # Screenshots go to the clipboard
 defaults write com.apple.screencapture target -string "clipboard"
@@ -24,6 +25,24 @@ defaults write NSGlobalDomain AppleWindowTabbingMode -string "always"
 
 # Appearance follows time of day
 defaults write NSGlobalDomain AppleInterfaceStyleSwitchesAutomatically -bool true
+
+# Finder: column view by default; Downloads uses list view sorted by newest Date Added.
+defaults write com.apple.finder FXPreferredViewStyle -string "clmv"
+osascript <<'APPLESCRIPT'
+tell application "Finder"
+    set defaultWindow to make new Finder window to (path to home folder)
+    set current view of defaultWindow to column view
+    set sort column of column view options of defaultWindow to name column
+    close defaultWindow
+
+    set downloadsFolder to (path to downloads folder)
+    set downloadsWindow to make new Finder window to downloadsFolder
+    set current view of downloadsWindow to list view
+    set sort column of list view options of downloadsWindow to date added column
+    set sort direction of column id date added column of list view options of downloadsWindow to reversed
+    close downloadsWindow
+end tell
+APPLESCRIPT
 
 # Window tiling shortcuts (System Settings > Keyboard > Keyboard Shortcuts).
 # Modifier masks: ctrl=262144, opt=524288, fn/arrow flag=8388608.
