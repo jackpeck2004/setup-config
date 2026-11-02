@@ -1,0 +1,5 @@
+{
+  "name": "terminal",
+  "version": "0.1.0",
+  "description": "An integrated terminal pane beside the chat, backed by a tmux session per project"
+}

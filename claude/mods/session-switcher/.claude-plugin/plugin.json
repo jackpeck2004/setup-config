@@ -1,0 +1,6 @@
+{
+  "name": "session-switcher",
+  "version": "0.1.0",
+  "description": "Sidebar of every running Claude Code session across projects; switch via tmux and drill into subagents",
+  "types": "./types/index.d.ts"
+}

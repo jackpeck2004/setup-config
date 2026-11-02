@@ -29,7 +29,7 @@ if [ "$OS" = "Darwin" ]; then
 
   # Install dependencies via Homebrew (only what is missing, nothing is upgraded)
   echo "Installing dependencies via Homebrew..."
-  PACKAGES="gettext cmake curl wget git go tmux tig ripgrep fd"
+  PACKAGES="gettext cmake curl wget git go tmux tig ripgrep fd jq"
   for pkg in $PACKAGES; do
     brew list --formula "$pkg" &>/dev/null || brew install "$pkg"
   done
@@ -46,11 +46,11 @@ elif [ -r /etc/os-release ]; then
   if [ "$ID" = "ubuntu" ]; then
     echo "Ubuntu detected, automatically installing/upgrading dependencies"
     sudo apt update
-    sudo apt install --upgrade gettext cmake curl wget git build-essential golang-go tmux tig ripgrep fd zsh -y
+    sudo apt install --upgrade gettext cmake curl wget git build-essential golang-go tmux tig ripgrep fd zsh jq -y
   elif [ "$ID" = "fedora" ]; then
     echo "Fedora detected, automatically installing/upgrading dependencies"
-    sudo dnf -y upgrade gettext cmake curl git go tmux tig ripgrep fd zsh
-    sudo dnf -y install gettext cmake curl git go tmux tig ripgrep fd zsh
+    sudo dnf -y upgrade gettext cmake curl git go tmux tig ripgrep fd zsh jq
+    sudo dnf -y install gettext cmake curl git go tmux tig ripgrep fd zsh jq
     sudo dnf -y group install "C Development Tools and Libraries" "Development Tools"
   else
     echo "Unsupported distro: $ID"
@@ -72,6 +72,7 @@ fi
 
 ./setup_alias.sh
 ./setup_tmux.sh
+./setup_claude.sh
 ./setup_git_worktrees.sh
 ./setup_docker.sh
 ./setup_git_signing.sh

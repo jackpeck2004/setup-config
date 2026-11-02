@@ -14,6 +14,7 @@ Every script is idempotent, so re-running `setup.sh` is safe.
 | `install_nvim.sh`, `setup_nvim.sh` | Neovim and the LazyVim config (cloned over SSH) |
 | `setup_alias.sh` | Symlinks `~/.config/alias` to the `alias` file in this repo |
 | `setup_tmux.sh` | `~/.tmux.conf` |
+| `setup_claude.sh` | Symlinks the Claude Code mods in `claude/mods/` and `keybindings.json`, and enables the mods in `~/.claude/settings.json` |
 | `setup_git_worktrees.sh` | Bare-clone helper and git defaults |
 | `setup_docker.sh` | OrbStack (macOS) or Docker Engine (Linux) |
 | `setup_git_signing.sh` | 1Password SSH commit signing (macOS only) |

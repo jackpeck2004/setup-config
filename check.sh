@@ -99,6 +99,21 @@ else
     fail "~/.tmux.conf missing"
 fi
 
+REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+for mod in "$REPO_DIR"/claude/mods/*/; do
+    name="$(basename "$mod")"
+    if [ "$(readlink "$HOME/.claude/mods/$name")" = "$REPO_DIR/claude/mods/$name" ]; then
+        pass "claude mod $name linked"
+    else
+        fail "claude mod $name not linked into ~/.claude/mods"
+    fi
+    if grep -Fq "~/.claude/mods/$name" "$HOME/.claude/settings.json" 2>/dev/null; then
+        pass "claude mod $name enabled"
+    else
+        fail "claude mod $name missing from CLAUDE_CODE_PLUGIN_DIRS"
+    fi
+done
+
 if command -v codegraph &>/dev/null; then
     pass "codegraph installed"
 else
