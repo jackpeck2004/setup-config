@@ -8,6 +8,18 @@ fi
 
 echo "Applying macOS defaults..."
 
+# Ignore Finder metadata in every Git repository for this user.
+git_excludes="$(git config --global --get core.excludesfile || true)"
+if [ -z "$git_excludes" ]; then
+    git_excludes="$HOME/.config/git/ignore"
+    git config --global core.excludesfile "$git_excludes"
+fi
+mkdir -p "$(dirname "$git_excludes")"
+touch "$git_excludes"
+if ! grep -qxF '.DS_Store' "$git_excludes"; then
+    printf '%s\n' '.DS_Store' >> "$git_excludes"
+fi
+
 # Dock: no autohide delay, fast animation, tile size
 defaults write com.apple.dock autohide-delay -float 0
 defaults write com.apple.dock autohide-time-modifier -float 0.15
