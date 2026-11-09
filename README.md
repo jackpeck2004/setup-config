@@ -18,13 +18,15 @@ Every script is idempotent, so re-running `setup.sh` is safe.
 | `setup_git_worktrees.sh` | Bare-clone helper and git defaults |
 | `setup_docker.sh` | OrbStack (macOS) or Docker Engine (Linux) |
 | `setup_git_signing.sh` | 1Password SSH commit signing (macOS only) |
+| `setup_prompts.sh` | Clones the private prompt-db repo to `~/.config/pdb`, links `pdb` into `~/.local/bin`, installs gum on Linux |
 | `setup_macos.sh` | macOS defaults, Dock and tiling shortcuts (macOS only) |
 | `check.sh` | Post-setup sanity checks |
 
 ## Before you start (all OSes)
 
 `setup_nvim.sh` clones over SSH, so your SSH key must be usable **before** you run `setup.sh`.
-The key and the SSH config both live in 1Password.
+The key and the SSH config both live in 1Password. `setup_prompts.sh` also clones over SSH,
+since the prompt-db repo it uses is private.
 
 1. Install 1Password (OS-specific steps below) and sign in.
 2. In 1Password, open **Settings > Developer** and turn on **Use the SSH agent**.

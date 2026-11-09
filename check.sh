@@ -120,6 +120,22 @@ else
     fail "codegraph not found on PATH"
 fi
 
+echo "== prompt library =="
+check_cmd fzf
+check_cmd gum
+
+PDB_LINK="$HOME/.local/bin/pdb"
+PDB_RESOLVED="$(command -v pdb 2>/dev/null)"
+if [ -z "$PDB_RESOLVED" ]; then
+    fail "pdb not found on PATH"
+elif [ "$PDB_RESOLVED" != "$PDB_LINK" ]; then
+    fail "pdb resolves to $PDB_RESOLVED instead of $PDB_LINK (shadowed by that path)"
+elif [ ! -e "$PDB_LINK" ]; then
+    fail "$PDB_LINK symlink target missing"
+else
+    pass "pdb ($PDB_LINK)"
+fi
+
 echo "== containers =="
 if [ "$OS" = "Darwin" ]; then
     if brew list --cask orbstack &>/dev/null; then
